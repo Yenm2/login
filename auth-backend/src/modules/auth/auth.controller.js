@@ -1,8 +1,10 @@
 const authService = require('./auth.service');
+const {validateLogin, validateRegister} = require('./auth.validation');
 
 const register = async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
+		validateRegister({ name, email, password });
 		const user = await authService.registerUser({ name, email, password });
 		return res.status(201).json({
 			mensaje: 'Usuario registrado exitosamente',
@@ -16,10 +18,14 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		const user = await authService.loginUser(email, password);
+
+		validateLogin({ email, password });
+
+		const result = await authService.loginUser(email, password);
+
 		return res.status(200).json({
 			mensaje: 'Login exitoso',
-			user
+			...result
 		});
 	} catch (error) {
 		return res.status(401).json({ error: error.message });
