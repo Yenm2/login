@@ -1,0 +1,24 @@
+auth-backend/
+├── src/
+│   ├── config/             # Cosas globales de infraestructura (DB, env vars)
+│   │   ├── db.js
+│   │   └── env.js
+│   │
+│   ├── modules/            # O "features/" — el núcleo del negocio
+│   │   └── auth/           # Todo el ciclo de login/registro contenido aquí
+│   │       ├── auth.routes.js
+│   │       ├── auth.controller.js
+│   │       ├── auth.service.js
+│   │       ├── auth.repository.js (o user.model.js)
+│   │       ├── auth.middleware.js # Middleware específico para proteger rutas con JWT
+│   │       └── auth.validation.js # Esquemas de validación de datos de entrada
+│   │
+│   ├── shared/             # Cosas que cruzan múltiples features sin pertenecer a una sola
+│   │   ├── middlewares/    # Error handler global, logger, rate limiting
+│   │   └── utils/          # Formateadores, helpers generales
+│   │
+│   └── app.js              # Ensamblador de Express (registra los módulos)
+├── .env
+├── .env.example
+├── package.json
+└── server.js               # Punto de entrada / listen
